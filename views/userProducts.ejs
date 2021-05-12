@@ -1,0 +1,73 @@
+<%- include('partials/header.ejs') %>
+  <hr>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gigster</title>
+  <!-- CSS only -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+ <!-- JavaScript Bundle with Popper -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+  <link href="/styles.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+<div class="row">
+	<div class="col-lg-12">
+		<div class="main-box clearfix">
+			<div class="table-responsive">
+				<table class="table user-list">
+					<tbody>
+                        <% for(p of products) { %>
+						    <tr>
+                                <td>
+                                    <img src="<%=p.imageURL%>" alt="<%=p.productName%> image" width="250px" height="300px">
+                                </td>
+                                <td style="width: 60%;">
+                                    <h4> <%=p.productName%> </h4>
+                                    <br>
+                                    <h6> Description: </h6>
+                                    <p> <%=p.productDescription%> </p>
+                                </td>
+                                <td style="width: 20%;">
+                                    <a href="/product/edit?productId=<%=p.productId%>" class="table-link">
+                                        <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                    <a href="#" class="deleteProduct" productId="<%=p.productId%>">Delete</a>
+                                </td>
+						    </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <script>
+
+ $(".deleteProduct").on("click", confirmDeleteProduct);
+
+ function confirmDeleteProduct(){
+   let deleteProduct = confirm(`Are you sure?`);
+   if (deleteProduct) {
+       //we need to delete record
+      let productId = $(this).attr("productId");
+      console.log(productId);
+      window.location.href = `/product/delete?productId=${productId}`; 
+   }
+ }
+
+ </script>
+ </body>
+ </html>
+
+<%- include('partials/footer.ejs') %>
+  <hr>

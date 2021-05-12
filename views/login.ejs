@@ -1,0 +1,80 @@
+<%- include('partials/header.ejs') %>
+  <hr>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="script.js"></script>
+</head>
+<body>
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+		<div class="login-form">
+			<div class="sign-in-htm">
+                <form action="/login" method="POST">
+                    <div class="group">
+                        <label for="user" class="label">Username</label>
+                        <input id="user" name="username" type="text" class="input">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Password</label>
+                        <input id="pass" name="password" type="password" class="input">
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="Sign In">
+                    </div>
+                    <div class="hr"></div>
+                </form>
+			</div>
+			<div class="sign-up-htm">
+                <form action="/signup" method="POST">
+                    <div class="group">
+                        <label for="firstName" class="label">First Name</label>
+                        <input id="firstName" name="suFirstName" type="text" class="input" required>
+                    </div>
+                    <div class="group">
+                        <label for="lastName" class="label">Last Name</label>
+                        <input id="lastName" name="suLastName" type="text" class="input" required>
+                    </div>
+                    <div class="group">
+                        <label for="user" class="label">Username</label>
+                        <input id="user" name="suUsername" type="text" class="input" required>
+                    </div>
+                    <div class="group">
+                        <label for="suPassword_" class="label">Password</label>
+                        <input id="suPassword_" name="suPassword" type="password" class="input" data-type="password" required>
+                    </div>
+                    <div class="group">
+                        <label for="suPasswordRepeat_" class="label">Repeat Password</label>
+                        <input id="suPasswordRepeat_" name="suPasswordRepeat" type="password" class="input" data-type="password" required>
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Email Address</label>
+                        <input id="pass" name="suEmail" placeholder="exmaple@gmail.com" type="text" class="input" required>
+                    </div>
+                    <div class="group">
+                        <label for="phone" class="label">Phone Number</label>
+                        <input id="phone" name="suPhone" type="tel" placeholder="123-456-6789" class="input" required>
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="Sign Up">
+                    </div>
+                    <div class="hr"></div>
+                </form>
+			</div>
+		</div>
+	</div>
+</div>
+
+  
+
+    <% if (typeof error != "undefined") { %>
+    <%= error %>
+    <% } %>
+</body>
+</html>

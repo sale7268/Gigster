@@ -1,0 +1,66 @@
+<%- include('partials/header.ejs') %>
+  <hr>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gigster</title>
+  <!-- CSS only -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+ <!-- JavaScript Bundle with Popper -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+  <link href="/styles.css" rel="stylesheet">
+</head>
+
+<section class="addPostBody">
+    <div id="content">
+        <div class="card border-dark mb-3" style="max-width: 550px;">
+            <div class="card-header"><h3>Update Post</h3></div>
+            <div class="card-body text-dark">
+
+                <form method="POST" action="/product/edit" id="addPostCard">
+                
+                    Product Name:<br>
+                    <input type="text" name="productName_" style="width:500px;" value="<%=editPost[0].productName%>" required> <br><br>
+
+                    Description:<br>
+                    <input style="height:100px; width:500px;" name="description" value="<%=editPost[0].productDescription%>" required> <br>
+                    <br>
+
+                    Category:
+                    <select name="category" required>
+                        <option value=<%=editPost[0].productCategory%>><%=editPost[0].productCategory%></option>
+                        <% for(c of categories) { %>
+                            <option value="<%=c.productCategory%>" name=<%=c.productCategory%>> <%=c.productCategory%> </option>
+                        <% } %>
+                    </select>
+                    
+                    Image URL:
+                    <input type="text" name="image" style="width:195px;" value="<%=  editPost[0].imageURL%>" required>
+                    <br><br>
+                    Zip Code:
+                    <!--<input type="text" name="location" style="width:210px"> <br><br>-->
+                    <input id="zip" type="text" name="location" style="width:210px" value="<%=  editPost[0].productLocation%>" required> <strong id="zipCheck"></strong>
+                    <br><br>
+                    Location: <strong id="city"></strong> <strong id="state"></strong><br><br>
+
+                    <input type="hidden" name="productId" value="<%=  editPost[0].productId%>">
+
+
+                    <button>Update Post</button>
+                </form> <br>
+            </div>
+        </div>
+
+        <% if (typeof message != "undefined") { %>
+            <h3><%= message %></h3>
+        <% } %>
+    </div>
+
+    <script src="script.js"></script>
+</section>
+
+<%- include('partials/footer.ejs') %>
+  <hr>

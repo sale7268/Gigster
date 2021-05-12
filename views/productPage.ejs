@@ -1,0 +1,173 @@
+<%- include('partials/header.ejs') %>
+
+
+<!--Section: Block Content-->
+<section class="mb-5">
+
+  <div class="row">
+    <div class="col-md-6 mb-4 mb-md-0">
+
+      <div id="mdb-lightbox-ui"></div>
+
+      <div class="mdb-lightbox">
+
+        <div class="row product-gallery mx-1">
+
+          <div class="col-12 mb-0">
+            <figure class="view overlay rounded z-depth-1 main-img">
+              <a href= "<%=product[0].imageURL%>"
+                data-size="710x823">
+                <img name="saveProductImg" src= "<%=product[0].imageURL%>"
+                  class="img-fluid z-depth-1">
+              </a>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+
+      <h5 name="saveProductName"><%=product[0].productName%></h5>
+      <p class="mb-2 text-muted text-uppercase small"><%=product[0].productCategory%></p>
+      <ul class="rating">
+
+        <% for (i = 0; i < 5; i++) { %>
+            <i class="fa fa-star fa-sm"></i>
+        <% } %>  
+  
+      </ul>
+      <p><span class="mr-1"><strong>$$ call for information</strong></span></p>
+      <p class="pt-1"><%=product[0].productDescription%></p>
+      <div class="table-responsive">
+        <table class="table table-sm table-borderless mb-0">
+          <tbody>
+            <tr>
+              <th class="pl-0 w-25" scope="row"><strong>Location</strong></th>
+              <td><%=product[0].productLocation%></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+
+      <button type="button" class="btn btn-danger" id="favBtn" productId="<%=product[0].productId%>"> Add to favorites</button>
+
+      <!--Contact Info Button -->  
+      <button type="button" class="btn btn-info" id="infoBtn"
+      product_ID="<%=product[0].productId%>"> <i
+          class="fa fa-info-circle pr-2"> </i>Click for Info</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Contact information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="productInfo"> </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+    <% if (typeof message != "undefined") { %>
+        <h3><%= message %></h3>
+    <% } %>
+</div>
+
+</section>
+
+<!-- Classic tabs -->
+<div class="classic-tabs border rounded px-4 pt-1">
+    <div id="reviewRow">
+
+    <ul class="nav tabs-primary nav-justified" id="advancedTab" role="tablist">
+        <li class="nav-item">
+        <a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false"><span id="reviewsTab">Reviews<span></a>
+        </li>
+    </ul>
+        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+            <% for (i of comment) { %>
+            <div class="media mt-3 mb-4">
+                <img class="d-flex mr-3 z-depth-1" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" width="62" alt="Generic placeholder image">
+                <div class="media-body">
+                    <div class="d-sm-flex justify-content-between">
+                        <p class="mt-1 mb-2">
+                        <strong><%=i.commentUserName%> </strong>
+                        </p>
+                    </div>
+                    <p class="mb-0"><%=i.comment%></p>
+                </div>
+            </div>
+        <% } %>  
+        <hr>
+        <h5 class="mt-4">Add a review</h5>
+        <form method="POST" action="/comment/new">
+            <input type="hidden" name="product_Id_" value="<%=product[0].productId%>">
+            <!-- Your review -->
+            <div class="md-form md-outline">
+            <label for="form76">Your review</label>
+            <textarea id="form76" class="md-textarea form-control pr-6" rows="4" name="review"></textarea> 
+            </div>
+            <!-- Name -->
+            <div class="md-form md-outline">
+            <label for="form75">Name</label>
+            <input type="text" id="form75" class="form-control pr-6" name="commentUser"></input>
+            </div>
+            <br><br>
+            <div class="text-right pb-2">
+            <button>Add Comment</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+<!-- Classic tabs -->
+
+
+
+<%- include('partials/footer.ejs') %>
+
+ <script>
+$(document).ready(function () {
+
+})
+
+$("#favBtn").on("click", gotoFav);
+async function gotoFav(){
+
+  let productId = $(this).attr("productId");
+
+window.location.href=`/productPage/addFav?productId=${productId}`;
+}
+
+
+
+
+
+//Display Modal with user/product information
+$("#infoBtn").on("click", displayInfo);
+async function displayInfo(){ 
+ var myModal = new bootstrap.Modal(document.getElementById('productModal'));
+ myModal.show();
+
+  let url = `/api/getproductPage?productId=<%=product[0].productId%>`;
+  let response = await fetch(url);
+  let data = await response.json();
+  //button info
+  $("#productInfo").html(`<h6> Name: ${data[0].firstName} ${data[0].lastName} </h6> <h6>Phone: ${data[0].userPhone}</h6> <h6>Email: ${data[0].userEmail}</h6>`);
+}
+
+
+</script>

@@ -1,0 +1,43 @@
+<%- include('partials/header.ejs') %>
+  <hr>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gigster</title>
+  <link href="/styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Displaying the content/products -->
+    <div class="flex-body">
+        <div class="flex-container">
+            <%  for (i of products) { %>
+                <div class="card shadow-sm border-light mb-4">
+                    <a href="/productPage?product_Id=<%=i.productId%>" class="position-relative">
+                        <img src="<%=i.imageURL%>" alt="<%=i.productName%> image" class="card-img-top" width="30px" height="300px">                            
+                    </a>
+                    <!-- Card Body-->
+                    <div class="card-body">
+                        <!-- Card clickable Link/Name-->
+                        <a href="/productPage?product_Id=<%=i.productId%>">
+                                <h5 class="font-weight-normal"><%=i.productName%></h5>
+                        </a>
+                        <!-- Card Location-->
+                        <div class="post-meta"><span class="small lh-120"><i class="fas fa-map-marker-alt mr-2"></i><%=i.productLocation%></span></div>
+                        <!-- Card Description body-->
+                        <div class="wrapper">
+                            <p><strong> Summary </strong></p>
+                            <p class="textWrap"><%= i.productDescription%></p>
+                        </div>
+                    </div>
+                </div>
+            <%  } %>
+        </div>
+    </div>
+</body>
+</html>
+
+<%- include('partials/footer.ejs') %>
+  <hr>
